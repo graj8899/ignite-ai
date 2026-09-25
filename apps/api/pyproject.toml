@@ -1,8 +1,8 @@
 [project]
-name = "api"
+name = "ignite-api"
 version = "0.1.0"
 description = "Ignite RAG v1 — FastAPI backend"
-requires-python = ">=3.14.7"
+requires-python = ">=3.14"
 dependencies = [
     "fastapi[standard]>=0.115",
     "pydantic-settings>=2.6",

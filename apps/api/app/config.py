@@ -4,6 +4,7 @@ Model names and other operational values are plain strings from the
 environment — never hard-coded, never defaulted for secrets.
 """
 
+from functools import lru_cache
 from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -35,6 +36,11 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:3000"
 
 
+@lru_cache
 def get_settings() -> Settings:
-    """Build a fresh Settings instance (reads env/.env each call)."""
+    """Return the process-wide Settings instance (built once, cached).
+
+    Tests should not rely on this reading the real .env — override this
+    dependency instead (see tests/conftest.py).
+    """
     return Settings()
