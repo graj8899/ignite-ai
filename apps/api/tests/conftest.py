@@ -7,6 +7,7 @@ even on a machine with no .env present.
 """
 
 import pytest
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from app.config import Settings, get_settings
@@ -24,7 +25,14 @@ def _test_settings() -> Settings:
 
 
 @pytest.fixture
-def client() -> TestClient:
-    app = create_app()
-    app.dependency_overrides[get_settings] = _test_settings
+def app() -> FastAPI:
+    """A fresh app with settings overridden. Tests may add further
+    dependency_overrides (e.g. get_db) before building a client from it."""
+    fastapi_app = create_app()
+    fastapi_app.dependency_overrides[get_settings] = _test_settings
+    return fastapi_app
+
+
+@pytest.fixture
+def client(app: FastAPI) -> TestClient:
     return TestClient(app)

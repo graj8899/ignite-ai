@@ -4,8 +4,11 @@ version = "0.1.0"
 description = "Ignite RAG v1 — FastAPI backend"
 requires-python = ">=3.14"
 dependencies = [
+    "alembic>=1.20.0",
     "fastapi[standard]>=0.115",
+    "psycopg[binary]>=3.2",
     "pydantic-settings>=2.6",
+    "sqlalchemy>=2.0",
 ]
 
 [dependency-groups]
@@ -31,3 +34,9 @@ extend-immutable-calls = ["fastapi.Depends", "fastapi.params.Depends"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
+markers = [
+    "integration: needs a real database; run explicitly with -m integration",
+]
+# Plain `pytest` runs only unit tests (no DB required); integration tests
+# are opt-in via `pytest -m integration`.
+addopts = "-m 'not integration'"

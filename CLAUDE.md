@@ -99,8 +99,11 @@ Placeholders — fill in as each step lands.
 | Lint (Python) | `cd apps/api && uv run ruff check .` |
 | Format (Python) | `cd apps/api && uv run ruff format .` |
 | Lint (web) | `TBD` |
-| Tests (API) | `cd apps/api && uv run pytest` |
+| Tests (API, unit only) | `cd apps/api && uv run pytest` |
+| Tests (API, integration) | `cd apps/api && uv run pytest -m integration` (needs `docker compose up -d`) |
 | Tests (web) | `TBD` — `npm test` |
+| Run DB migrations | `cd apps/api && uv run alembic upgrade head` |
+| Create a new migration | `cd apps/api && uv run alembic revision -m "description"` |
 | DB migrations | `TBD` — `uv run alembic upgrade head` |
 | Seed data | `TBD` |
 | Run evaluation | `TBD (Phase 6)` |
