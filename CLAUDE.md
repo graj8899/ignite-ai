@@ -94,11 +94,12 @@ Placeholders — fill in as each step lands.
 |---|---|
 | Start Postgres + pgvector | `docker compose up -d` |
 | Stop Postgres + pgvector | `docker compose down` (add `-v` to also delete data) |
-| Run API (dev) | `TBD (Phase 0)` — `uv run fastapi dev` |
-| Run web (dev) | `TBD (Phase 0/1)` — `npm run dev` |
-| Lint / format (Python) | `TBD` — `uv run ruff check` / `uv run ruff format` |
+| Run API (dev) | `cd apps/api && uv run fastapi dev app/main.py` |
+| Run web (dev) | `TBD (Phase 1)` — `npm run dev` |
+| Lint (Python) | `cd apps/api && uv run ruff check .` |
+| Format (Python) | `cd apps/api && uv run ruff format .` |
 | Lint (web) | `TBD` |
-| Tests (API) | `TBD` — `uv run pytest` |
+| Tests (API) | `cd apps/api && uv run pytest` |
 | Tests (web) | `TBD` — `npm test` |
 | DB migrations | `TBD` — `uv run alembic upgrade head` |
 | Seed data | `TBD` |
