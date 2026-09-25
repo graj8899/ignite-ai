@@ -1,0 +1,46 @@
+# --- Secrets / env ---
+.env
+.env.*
+!.env.example
+
+# --- Python / uv ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+dist/
+build/
+*.egg-info/
+# uv.lock is intentionally committed
+
+# --- Node / Next.js ---
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+coverage/
+.vercel/
+
+# --- macOS ---
+.DS_Store
+._*
+
+# --- Editors ---
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Claude Code (local only) ---
+.claude/settings.local.json
