@@ -92,7 +92,8 @@ Placeholders — fill in as each step lands.
 
 | Task | Command |
 |---|---|
-| Start Postgres + pgvector | `TBD (Phase 0)` — `docker compose up -d` |
+| Start Postgres + pgvector | `docker compose up -d` |
+| Stop Postgres + pgvector | `docker compose down` (add `-v` to also delete data) |
 | Run API (dev) | `TBD (Phase 0)` — `uv run fastapi dev` |
 | Run web (dev) | `TBD (Phase 0/1)` — `npm run dev` |
 | Lint / format (Python) | `TBD` — `uv run ruff check` / `uv run ruff format` |
