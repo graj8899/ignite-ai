@@ -3,10 +3,17 @@
 Unlike the unit tests, this test intentionally does NOT override settings or
 get_db — it exercises app.main + app.db + app.config exactly as they run in
 production, against the database from the real .env (e.g. the local
-docker-compose Postgres). It is skipped automatically when that database is
-unreachable, so `pytest` still passes on a machine with no DB running; run
-it explicitly with `pytest -m integration` when Postgres is up.
+docker-compose Postgres).
+
+Locally, an unreachable database SKIPS this test, so `pytest` still passes
+on a machine with no DB running; run it explicitly with `pytest -m
+integration` when Postgres is up. In CI (REQUIRE_DB=1), an unreachable
+database instead FAILS the test — CI has a service container, so "can't
+reach the database" there means something is actually broken, not that the
+developer just hasn't started Docker.
 """
+
+import os
 
 import pytest
 from fastapi.testclient import TestClient
@@ -25,7 +32,10 @@ def real_client() -> TestClient:
         with get_engine().connect() as conn:
             conn.execute(text("SELECT 1"))
     except SQLAlchemyError as exc:
-        pytest.skip(f"database unreachable, skipping integration test: {exc}")
+        message = f"database unreachable: {exc}"
+        if os.environ.get("REQUIRE_DB") == "1":
+            pytest.fail(message)
+        pytest.skip(message)
 
     return TestClient(create_app())
 

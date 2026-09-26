@@ -46,7 +46,7 @@ jobs:
         run: uv run ruff format --check .
 
       - name: Unit tests
-        run: uv run pytest
+        run: uv run pytest -rs
 
   api-integration:
     name: api (migrations + integration tests)
@@ -75,6 +75,9 @@ jobs:
       EMBEDDING_MODEL: ci-dummy-embedding-model
       AUTH_SECRET: ci-dummy-secret
       DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/postgres
+      # An unreachable DB in this job means something is broken (there's a
+      # service container), so fail instead of silently skipping.
+      REQUIRE_DB: "1"
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -97,4 +100,4 @@ jobs:
           uv run alembic upgrade head
 
       - name: Integration tests
-        run: uv run pytest -m integration
+        run: uv run pytest -m integration -rs
