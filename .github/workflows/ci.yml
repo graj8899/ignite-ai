@@ -22,7 +22,7 @@ concurrency:
 jobs:
   api:
     name: api (lint + unit tests)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: apps/api
@@ -34,10 +34,12 @@ jobs:
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
           enable-cache: true
-          python-version-file: apps/api/.python-version
 
       - name: Install dependencies
         run: uv sync --locked
+
+      - name: Show Python version
+        run: uv run python --version
 
       - name: Ruff check
         run: uv run ruff check .
@@ -50,7 +52,7 @@ jobs:
 
   api-integration:
     name: api (migrations + integration tests)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: apps/api
@@ -86,10 +88,12 @@ jobs:
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
           enable-cache: true
-          python-version-file: apps/api/.python-version
 
       - name: Install dependencies
         run: uv sync --locked
+
+      - name: Show Python version
+        run: uv run python --version
 
       - name: Run migrations (upgrade)
         run: uv run alembic upgrade head
